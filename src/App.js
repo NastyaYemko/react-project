@@ -14,13 +14,14 @@ function App() {
         {id: 3, title: 'JavaScript 3', body: 'Description'},
     ])
     const [title, setTitle] = useState('')
-    const bodyInputRef = useRef()
+    const [body, setBody] = useState('')
 
     const addNewPost = (e) => {
       e.preventDefault()  // предотвращение поведения по умолчанию
-        console.log(title)
-        console.log(bodyInputRef.current.value)
-        bodyInputRef.current.value = ' '
+        const newPost = {
+          body
+        }
+        console.log(newPost)
     }
 
   return (
@@ -32,8 +33,12 @@ function App() {
                 type="text"
                 placeholder="Name of project"
             />
-            <input ref={bodyInputRef} type="text"/>
-            <MyInput ref={bodyInputRef} type="text" placeholder="Desc of project"/>
+            <MyInput
+                value={body}
+                onChange={e => setBody(e.target.value)}
+                type="text"
+                placeholder="Desc of project"
+            />
             <MyButton onClick={addNewPost}>Create Post</MyButton>
         </form>
       <PostList posts={posts}/>
