@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 import PostItem from "./components/PostItem";
@@ -13,12 +13,28 @@ function App() {
         {id: 2, title: 'JavaScript 2', body: 'Description'},
         {id: 3, title: 'JavaScript 3', body: 'Description'},
     ])
+    const [title, setTitle] = useState('')
+    const bodyInputRef = useRef()
+
+    const addNewPost = (e) => {
+      e.preventDefault()  // предотвращение поведения по умолчанию
+        console.log(title)
+        console.log(bodyInputRef.current.value)
+        bodyInputRef.current.value = ' '
+    }
+
   return (
     <div className="App">
         <form>
-            <MyInput type="text" placeholder="Name of project"/>
-            <MyInput type="text" placeholder="Desc of project"/>
-            <MyButton>Create Post</MyButton>
+            <MyInput
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+                type="text"
+                placeholder="Name of project"
+            />
+            <input ref={bodyInputRef} type="text"/>
+            <MyInput ref={bodyInputRef} type="text" placeholder="Desc of project"/>
+            <MyButton onClick={addNewPost}>Create Post</MyButton>
         </form>
       <PostList posts={posts}/>
     </div>
